@@ -1,0 +1,7 @@
+{
+  "extends": "rallycoding",
+  "rules": {
+    "quotes": [2, "double", { "avoidEscape": true }],
+    "react/require-extension": "off"
+  }
+}
