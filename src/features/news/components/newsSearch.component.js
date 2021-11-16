@@ -12,8 +12,6 @@ import { Searchbar } from "react-native-paper";
 import NewsComponent from "./news.component";
 import { Entypo } from "@expo/vector-icons";
 
-const WINDOW_WIDTH = Dimensions.get("window").width;
-
 const NewsSearch = () => {
   const {
     news: { articles },

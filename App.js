@@ -6,13 +6,16 @@ import { ThemeProvider } from "styled-components/native";
 import { Navigation } from "./src/infrastructure/navigation";
 import { theme } from "./src/infrastructure/theme";
 import { NewsContextProvider } from "./src/services/news/news.context";
+import { StockContextProvider } from "./src/services/stock/stock.context";
 
 const App = () => (
   <SafeAreaProvider>
     <StatusBar />
     <ThemeProvider theme={theme}>
       <NewsContextProvider>
-        <Navigation />
+        <StockContextProvider>
+          <Navigation />
+        </StockContextProvider>
       </NewsContextProvider>
     </ThemeProvider>
   </SafeAreaProvider>
