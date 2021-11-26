@@ -11,7 +11,7 @@ import {
 import { StockContext } from "../../../services/stock/stock.context";
 import { Searchbar } from "react-native-paper";
 import StockComponent from "./stock.component";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, AntDesign } from "@expo/vector-icons";
 
 const StockSearch = () => {
   const {
@@ -25,32 +25,25 @@ const StockSearch = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [click, setClick] = useState(true);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(undefined);
 
   const handleSearch = () => {
     setModalVisible(true);
   };
 
-  // const handleSearch = (text) => {
-  //   if (!text) {
-  //     setSearchResults([]);
-  //     return;
-  //   }
-  //   setSearchResults(
-  //     articles.filter((query) => {
-  //       const string = query.title.toLowerCase();
-  //       return string.includes(text);
-  //     })
-  //   );
-  // };
-
   return (
     <View style={{ padding: 10 }}>
       <Searchbar
         placeholder="Stock by company name"
+        icon={() => <AntDesign name="search1" size={20} color="black" />}
+        clearIcon={() => (
+          <Entypo name="circle-with-cross" size={20} color="black" />
+        )}
         onChangeText={(text) => {
           setValue(text);
-          searchStock(text);
+          if (value === null) {
+            searchStock(null);
+          }
         }}
         value={value}
       />
@@ -89,7 +82,7 @@ const StockSearch = () => {
             margin: 20,
           }}
         >
-          <Entypo name="circle-with-cross" size={30} color="white" />
+          <Entypo name="circle-with-cross" size={24} color="white" />
         </TouchableOpacity>
         <View style={{ height: "100%" }}>
           <StockComponent stock={stockQuote} price={stockPrice.price} />

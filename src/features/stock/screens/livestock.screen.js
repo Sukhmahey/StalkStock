@@ -8,9 +8,9 @@ const LivestockScreen = () => (
   <SafeArea>
     <View style={styles.container}>
       <StockSearch />
-      <View>
-        <Text style={styles.stockSymbol}>AAL</Text>
-        <Text style={styles.stockName}>American Airlines Group</Text>
+      <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+        <Text style={styles.stockSymbol}>Search</Text>
+        <Text style={styles.stockName}>Your Favourite Stock</Text>
         <View style={styles.divider} />
       </View>
     </View>

@@ -16,13 +16,7 @@ const ChatRoomNav = () => (
 
 export const ChatNavigator = () => (
   <Stack.Navigator screenOptions={createScreenOptions}>
-    <Stack.Screen
-      name="ChatScreen"
-      component={ChatScreen}
-      options={{
-        headerShown: true,
-      }}
-    />
+    <Stack.Screen name="ChatScreen" component={ChatScreen} />
     <Stack.Screen
       name="ChatRoomNav"
       component={ChatRoomNav}

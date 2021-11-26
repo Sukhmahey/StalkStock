@@ -11,16 +11,12 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+import { Searchbar } from "react-native-paper";
 
 import { StreamChat } from "stream-chat";
-import {
-  ChannelList,
-  Chat,
-  OverlayProvider,
-  useChannelsContext,
-} from "stream-chat-react-native";
-import { SafeArea } from "../../../components/utility/SafeArea.component";
 
+import { SafeArea } from "../../../components/utility/SafeArea.component";
+import { Entypo, AntDesign } from "@expo/vector-icons";
 import { AuthContext } from "../../../services/auth/auth.context";
 
 const filters = {};
@@ -51,24 +47,13 @@ const ChatScreen = ({ navigation, route }) => {
 
   const [channelsKey, setChannelsKey] = useState(1);
   const [channel, setChannels] = useState([]);
+  const [value, setValue] = useState(undefined);
+  const [searchResults, setSearchResults] = useState([]);
+  const [allChannels, setAllChannels] = useState([]);
   // DATA FOR MODAL
   const [modalVisible, setModalVisible] = useState(false);
   const [chatRoomName, setChatRoomName] = useState("");
   const [chatRoomDescription, setChatRoomDescription] = useState("");
-
-  // HEADER
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () =>
-        modalVisible ? null : (
-          <Button
-            onPress={() => setModalVisible(!modalVisible)}
-            title="Create"
-          />
-        ),
-      headerLeft: () => null,
-    });
-  }, [navigation, modalVisible]);
 
   // INIT STREAM - ONCE
   useEffect(() => {
@@ -102,7 +87,6 @@ const ChatScreen = ({ navigation, route }) => {
     });
 
     channels.map((chan) => {
-      console.log(chan.data.name, chan.cid);
       var result = channel.find((obj) => {
         return obj.id === chan.data.id;
       });
@@ -144,8 +128,57 @@ const ChatScreen = ({ navigation, route }) => {
     setModalVisible(false);
   };
 
+  const handleSearch = (text) => {
+    if (!text) {
+      setSearchResults([]);
+      return;
+    }
+    setSearchResults(
+      channel.filter((query) => {
+        const string = query.name.toLowerCase();
+        return string.includes(text);
+      })
+    );
+  };
+
   return (
     <SafeArea>
+      <View style={{ padding: 8 }}>
+        <Searchbar
+          placeholder="Search Channel"
+          icon={() => <AntDesign name="search1" size={20} color="black" />}
+          clearIcon={() => (
+            <Entypo name="circle-with-cross" size={20} color="black" />
+          )}
+          onChangeText={(text) => {
+            setValue(text);
+            handleSearch(text);
+          }}
+          value={value}
+        />
+      </View>
+      <View style={styles.searchResults}>
+        {searchResults.map((n) => (
+          <TouchableOpacity
+            key={n.id}
+            activeOpacity={(0, 7)}
+            onPress={() =>
+              navigation.navigate("ChatRoomNav", {
+                screen: "ChatRoom",
+                params: {
+                  name: n.name,
+                  id: n.id,
+                  cid: n.cid,
+                },
+              })
+            }
+          >
+            <Text style={{ ...styles.singleResult }}>
+              {n.name} - {n.description}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
       <Modal
         animationType="slide"
         transparent={true}
@@ -220,14 +253,23 @@ const ChatScreen = ({ navigation, route }) => {
                     backgroundColor: "white",
                   }}
                 >
-                  <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+                  <Text
+                    style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
+                  >
                     {item.name}
                   </Text>
-                  <Text style={{ fontSize: 12 }}>{item.description}</Text>
+                  <Text style={{ fontSize: 12, color: "black" }}>
+                    {item.description}
+                  </Text>
                 </View>
               </TouchableOpacity>
             );
           }}
+        />
+        <Button
+          title="create ChatRoom"
+          style={styles.float}
+          onPress={() => setModalVisible(!modalVisible)}
         />
       </View>
     </SafeArea>
@@ -235,6 +277,28 @@ const ChatScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  searchResults: {
+    position: "absolute",
+    zIndex: 1,
+    top: 50,
+    margin: 10,
+    flex: 1,
+    width: "90%",
+    backgroundColor: "white",
+  },
+  singleResult: {
+    borderRadius: 5,
+    padding: 8,
+    marginTop: 8,
+    shadowColor: "black",
+    backgroundColor: "orange",
+    elevation: 5,
+  },
+  float: {
+    backgroundColor: "#ee6e73",
+    position: "absolute",
+    bottom: 0,
+  },
   input: {
     width: 200,
     height: 40,

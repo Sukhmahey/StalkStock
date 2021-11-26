@@ -10,7 +10,7 @@ import {
 import { NewsContext } from "../../../services/news/news.context";
 import { Searchbar } from "react-native-paper";
 import NewsComponent from "./news.component";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, AntDesign } from "@expo/vector-icons";
 
 const NewsSearch = () => {
   const {
@@ -43,6 +43,10 @@ const NewsSearch = () => {
     <View style={{ padding: 10 }}>
       <Searchbar
         placeholder="Search for news"
+        icon={() => <AntDesign name="search1" size={20} color="black" />}
+        clearIcon={() => (
+          <Entypo name="circle-with-cross" size={20} color="black" />
+        )}
         onChangeText={(text) => {
           handleSearch(text);
           setValue(text);
@@ -77,7 +81,7 @@ const NewsSearch = () => {
             margin: 20,
           }}
         >
-          <Entypo name="circle-with-cross" size={30} color="white" />
+          <Entypo name="circle-with-cross" size={24} color="white" />
         </TouchableOpacity>
         <View style={{ height: "100%" }}>
           <NewsComponent item={currentNews} />

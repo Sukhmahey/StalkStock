@@ -1,6 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { SafeArea } from "../../../components/utility/SafeArea.component";
-import { Text, Pressable, StyleSheet, View } from "react-native";
+import {
+  Text,
+  Pressable,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import {
   GoogleSignin,
   statusCodes,
@@ -19,9 +25,11 @@ const LoginScreen = ({ navigation }) => {
 
   const getCurrentUser = async () => {
     const currentUser = await GoogleSignin.getCurrentUser();
-    console.log(`GET CURRENT USER ------- ${JSON.stringify(currentUser)}`);
+    //console.log(`GET CURRENT USER ------- ${JSON.stringify(currentUser)}`);
     setUser(currentUser);
-    setInitializing(false);
+    if (currentUser === null) {
+      setInitializing(false);
+    }
   };
 
   const makeid = (length) => {
@@ -36,28 +44,14 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const navigateToChats = (user) => {
-    console.log(`NAVIGATE WITH USER ${JSON.stringify(user)}`);
+    //console.log(`NAVIGATE WITH USER ${JSON.stringify(user)}`);
     setRequestInProgress(false);
-
+    setInitializing(false);
     setUserData(user);
     setAuth(true);
   };
 
   useEffect(() => {
-    // if (!firebase.apps.length) {
-    //   firebase.initializeApp({
-    //     apiKey: "AIzaSyCPJdVxlfc4G2FepPSRkMX6yZskZgrXkcY",
-    //     appId: "1:1069795074116:android:10cf16782666e2aec4dc11",
-    //     projectId: "stalkstock-dec0c",
-    //     messagingSenderId: "1069795074116",
-    //     databaseURL: "https://stalkstock-dec0c.firebaseio.com",
-    //     storageBucket:
-    //       "https://console.firebase.google.com/project/stalkstock-dec0c/storage/stalkstock-dec0c.appspot.com/files",
-    //   });
-    // } else {
-    //   firebase.app(); // if already initialized, use that one
-    // }
-
     GoogleSignin.configure({
       webClientId:
         "1069795074116-rrejncr9bvjhs02444sv08b2786kmtup.apps.googleusercontent.com",
@@ -66,14 +60,14 @@ const LoginScreen = ({ navigation }) => {
   }, []);
 
   const fetchUserData = async () => {
-    console.log(`FETCH USER DATA ${JSON.stringify(user.user)}`);
+    //console.log(`FETCH USER DATA ${JSON.stringify(user.user)}`);
     //clearTimeout(timerId);
     setRequestInProgress(true);
     const email = user.user.email; //'tbaranowicz@gmail.com';
-    console.log(`FETCH FOR EMAIL ${email}`);
+    //console.log(`FETCH FOR EMAIL ${email}`);
     const userRef = firestore().collection("Users").doc(email);
     const doc = await userRef.get();
-    console.log("DOCUMENT-----", doc);
+
     if (!doc.exists) {
       //ADD
       const userName = user.user.name; //'Tomek';
@@ -131,24 +125,51 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return initializing ? (
-    <Text>Initializing...</Text>
+    <View style={[styles.centeredView]}>
+      <View style={{ flex: 0.5 }}></View>
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Text style={styles.title}>STALK STOCK</Text>
+      </View>
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#blue" />
+        <Text style={styles.caption}>by xHuman</Text>
+      </View>
+    </View>
   ) : (
     <View style={styles.centeredView}>
-      <Pressable
-        style={[styles.button, styles.buttonLogIn]}
-        onPress={loginHandler}
-      >
-        <Text style={styles.textStyle}>Sign In with Google</Text>
-      </Pressable>
+      <View style={{ flex: 0.5 }}></View>
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Text style={styles.title}>STALK STOCK</Text>
+      </View>
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <Pressable
+          style={[styles.button, styles.buttonLogIn]}
+          onPress={loginHandler}
+        >
+          <Text style={styles.textStyle}>Sign In with Google</Text>
+        </Pressable>
+        <Text style={styles.caption}>by xHuman</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  title: {
+    color: "white",
+    fontSize: 48,
+    fontWeight: "bold",
+  },
+  caption: {
+    marginTop: 40,
+    color: "white",
+    fontSize: 14,
+  },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "black",
   },
   button: {
     borderRadius: 4,
@@ -162,6 +183,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "black",
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
   },
 });
 

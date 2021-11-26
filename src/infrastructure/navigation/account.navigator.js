@@ -4,7 +4,7 @@ import LoginScreen from "../../features/account/screens/login.screen";
 const Stack = createStackNavigator();
 
 const createScreenOptions = () => ({
-  headerShown: true,
+  headerShown: false,
 });
 
 export const AccountNavigator = () => (
