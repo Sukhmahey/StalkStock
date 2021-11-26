@@ -16,7 +16,7 @@ export const StockContextProvider = ({ children }) => {
       .get(`https://api.twelvedata.com/symbol_search?symbol=${searchSymbol}`)
       .then((response) => {
         let stk = response.data.data.filter((n) => {
-          return n.country === "India" || n.country === "United States";
+          return n.country === "United States";
         });
 
         setSearchResults(stk);
@@ -48,9 +48,9 @@ export const StockContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    searchResults.filter(
-      (n) => n.country === "United States" || n.country === "India"
-    );
+    searchResults.filter((n) => {
+      return n.country === "United States";
+    });
   }, [searchResults]);
   useEffect(() => {
     searchStock();

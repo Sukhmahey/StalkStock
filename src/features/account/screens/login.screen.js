@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import {
   GoogleSignin,
@@ -126,9 +127,18 @@ const LoginScreen = ({ navigation }) => {
 
   return initializing ? (
     <View style={[styles.centeredView]}>
-      <View style={{ flex: 0.5 }}></View>
-      <View style={{ flex: 1, justifyContent: "center" }}>
+      <View style={{ flex: 0.2 }}></View>
+      <View
+        style={{ flex: 1.5, justifyContent: "center", alignItems: "center" }}
+      >
         <Text style={styles.title}>STALK STOCK</Text>
+        <Image
+          style={{
+            height: 150,
+            width: 150,
+          }}
+          source={require("../../../../assets/icon_bull.png")}
+        />
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
         <ActivityIndicator size="large" color="#blue" />
@@ -137,9 +147,18 @@ const LoginScreen = ({ navigation }) => {
     </View>
   ) : (
     <View style={styles.centeredView}>
-      <View style={{ flex: 0.5 }}></View>
-      <View style={{ flex: 1, justifyContent: "center" }}>
+      <View style={{ flex: 0.2 }}></View>
+      <View
+        style={{ flex: 1.5, justifyContent: "center", alignItems: "center" }}
+      >
         <Text style={styles.title}>STALK STOCK</Text>
+        <Image
+          style={{
+            height: 150,
+            width: 150,
+          }}
+          source={require("../../../../assets/icon_bull.png")}
+        />
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Pressable
@@ -159,6 +178,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 48,
     fontWeight: "bold",
+    marginBottom: 30,
   },
   caption: {
     marginTop: 40,

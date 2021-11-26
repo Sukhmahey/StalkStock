@@ -19,13 +19,20 @@ const StockComponent = (stock) => {
   }
   return (
     <View style={styles.container}>
-      <View style={{ marginBottom: 15, marginTop: 50 }}>
+      <View style={{ flex: 0.1 }}></View>
+      <View style={{ marginBottom: 24, marginTop: 50, alignItems: "center" }}>
         <Text style={styles.companyName}>{stockQuote.name}</Text>
         <Text style={styles.exchange}>
           {stockQuote.exchange}: {stockQuote.symbol}
         </Text>
       </View>
-      <View style={{ justifyContent: "center", marginBottom: 50 }}>
+      <View
+        style={{
+          justifyContent: "center",
+          marginBottom: 60,
+          alignItems: "center",
+        }}
+      >
         <Text>
           <Text style={styles.latestPrice}>{stock.price} </Text>
           <Text style={{ color: "#6d788c" }}> {stockQuote.currency} </Text>
@@ -34,7 +41,7 @@ const StockComponent = (stock) => {
               {stockQuote.change}
             </Text>
             <Text style={positiveOrNegative(stockQuote.change)}>
-              ({formatPercentage(stockQuote.percent_change)}
+              ({formatPercentage(stockQuote.change, stockQuote.previous_close)}
               %) {upOrDownSymbol(stockQuote.percent_change)}
             </Text>
           </Text>

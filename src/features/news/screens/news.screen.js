@@ -33,7 +33,7 @@ const NewsScreen = () => {
             layoutCardOffset={18}
             data={articles.slice(0, 30)}
             sliderHeight={300}
-            itemHeight={ITEM_HEIGHT - 80 - 80}
+            itemHeight={ITEM_HEIGHT - 80}
             vertical
             onSnapToItem={(index) => setActiveIndex(index)}
             renderItem={({ item, index }) => (
