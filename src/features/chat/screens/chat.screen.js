@@ -102,7 +102,7 @@ const ChatScreen = ({ navigation, route }) => {
     });
 
     channels.map((chan) => {
-      console.log(chan.data.name, chan.id);
+      console.log(chan.data.name, chan.cid);
       var result = channel.find((obj) => {
         return obj.id === chan.data.id;
       });
@@ -112,13 +112,14 @@ const ChatScreen = ({ navigation, route }) => {
           {
             name: chan.data.name,
             id: chan.id,
+            cid: chan.cid,
             description: chan.data.description,
             channel: chan,
           },
         ]);
       }
     });
-  }, [chatClient, modalVisible]);
+  }, [chatClient, modalVisible, navigation]);
 
   async function createChatRoom() {
     const channel = chatClient.channel("messaging", makeid(9), {
@@ -200,9 +201,13 @@ const ChatScreen = ({ navigation, route }) => {
               <TouchableOpacity
                 onPress={() => {
                   setChannelData(item.channel);
-                  navigation.navigate("ChatRoom", {
-                    name: item.name,
-                    id: item.id,
+                  navigation.navigate("ChatRoomNav", {
+                    screen: "ChatRoom",
+                    params: {
+                      name: item.name,
+                      id: item.id,
+                      cid: item.cid,
+                    },
                   });
                 }}
               >

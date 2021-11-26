@@ -6,12 +6,29 @@ import ChatRoomScreen from "../../features/chat/screens/chatroom.screen";
 const Stack = createStackNavigator();
 
 const createScreenOptions = () => ({
-  headerShown: true,
+  headerShown: false,
 });
+const ChatRoomNav = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="ChatRoom" component={ChatRoomScreen} />
+  </Stack.Navigator>
+);
 
 export const ChatNavigator = () => (
   <Stack.Navigator screenOptions={createScreenOptions}>
-    <Stack.Screen name="ChatScreen" component={ChatScreen} />
-    <Stack.Screen name="ChatRoom" component={ChatRoomScreen} />
+    <Stack.Screen
+      name="ChatScreen"
+      component={ChatScreen}
+      options={{
+        headerShown: true,
+      }}
+    />
+    <Stack.Screen
+      name="ChatRoomNav"
+      component={ChatRoomNav}
+      options={{
+        title: "ChatRoom",
+      }}
+    />
   </Stack.Navigator>
 );
