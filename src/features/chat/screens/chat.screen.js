@@ -39,7 +39,7 @@ const CustomPreviewTitle = ({ channel }) => (
   </Text>
 );
 
-const chatClient = StreamChat.getInstance("bvdmsd4p8nfu");
+const chatClient = StreamChat.getInstance("m5ar4jbzd5kd");
 
 const ChatScreen = ({ navigation, route }) => {
   const { userData, setChatClient, chanelData, setChannelData } =

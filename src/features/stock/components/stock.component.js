@@ -80,7 +80,7 @@ const StockComponent = (stock) => {
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>52-wk low</Text>
-            <Text style={styles.value}>{stockQuote.fifty_two_week.high}</Text>
+            <Text style={styles.value}>{stockQuote.fifty_two_week.low}</Text>
           </View>
         </View>
       </View>

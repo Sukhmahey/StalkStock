@@ -20,7 +20,7 @@ import { SafeArea } from "../../../components/utility/SafeArea.component";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AuthContext } from "../../../services/auth/auth.context";
 import Entypo from "react-native-vector-icons/Entypo";
-const chatClient = StreamChat.getInstance("bvdmsd4p8nfu");
+const chatClient = StreamChat.getInstance("m5ar4jbzd5kd");
 
 const ChatRoomScreen = ({ navigation, route }) => {
   const { id, name } = route.params;
